@@ -1,0 +1,148 @@
+{% extends 'Base.html' %}
+
+
+{% block page_css %}
+<link rel="stylesheet" type="text/css" href="../../static/plugin/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/plugin/Hui-iconfont/1.0.8/iconfont.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/plugin/pifu/pifu.css" />
+{% endblock %}
+{% block Top_js %}
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } function showSide(){$('.navbar-nav').toggle();}</script>
+{% endblock %}
+
+{% block content %}
+<!--导航条-->
+<nav class="breadcrumb">
+    <div class="container">
+        <i class="Hui-iconfont">&#xe67f;</i><a href="{% url 'HomePage:index' %}" class="c-primary">首页</a>
+        <span class="c-gray en">&gt;</span> <a href="{% url 'article:page' %}" class="c-primary">文章</a>
+    </div>
+</nav>
+
+<section class="container">
+  <!--left-->
+  <div class="col-sm-9 col-md-9 mt-20">
+
+	  {%  for list in All_List %}
+  	<!--article list-->
+
+			<ul class="index_arc">
+				{% if list.image != "None" %}
+				<li class="index_arc_item">
+					<a href="detail?id={{list.id }}" class="pic">
+						<img class="lazyload"  alt="应该选"  src="../media/{{ list.image}}"/>
+					</a>
+					<h4 class="title"><a href="detail?id={{list.id }}"> {{list.title }} </a></h4>
+					<div class="date_hits">
+						<span>远默</span>
+						<span> {{list.add_time}} </span>
+						<span><a href="detail?id={{list.id }}"> {{list.category }}    </a></span>
+						<span><a href="detail?id={{list.id }}"> {{list.taginfo }}     </a></span>
+						<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> {{list.click_num }} </p>
+						<p class="commonts"><i class="Hui-iconfont" title="点击量">&#xe622;</i> <span class="cy_cmt_count">{{list.cont_num }}</span></p>
+					</div>
+					<div class="desc"> {{list.desc }}  </div>
+				</li>
+				{% else %}
+				<li class="index_arc_item no_pic">
+					<h4 class="title"><a href="detail?id={{list.id }}">{{list.title }}</a></h4>
+					<div class="date_hits">
+						<span>远默</span>
+						<span>{{list.add_time}}</span>
+						<span><a href="detail?id={{list.id }}"> {{list.category }}    </a></span>
+						<span><a href="detail?id={{list.id }}"> {{list.taginfo }}     </a></span>
+						<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> {{list.click_num }}</p>
+						<p class="commonts"><i class="Hui-iconfont" title="点击量">&#xe622;</i> <span id="sourceId::105" class="cy_cmt_count">{{list.cont_num }}</span></p>
+					</div>
+					<div class="desc"> {{list.desc }} </div>
+				</li>
+				{% endif %}
+				{% endfor %}
+				</ul>
+  		<div class="text-c mb-20" id="moreBlog">
+            <a class="btn  radius btn-block " href="javascript:;" onclick="moreBlog('${blogType.id}','${tag.name}');">点击加载更多</a>
+            <a class="btn  radius btn-block hidden" href="javascript:;">加载中……</a>
+        </div>		
+  </div>
+  
+  <!--right-->
+  <div class="col-sm-3 col-md-3 mt-20">
+  	
+  	<!--导航-->
+  	<div class="panel panel-primary mb-20">
+			<div class="panel-body">
+
+				<a class="btn btn-primary radius nav-btn" type="button" href="{% url 'article:page' %}"> 所有文章 </a>
+				{% for i in Big_type %}
+				<a class="btn btn-primary-outline radius nav-btn" type="button"  href="{% url 'article:page' %}?big_type={{ i.name }}"> {{ i.name }} </a>
+
+				{% endfor %}
+			</div>
+		</div>
+
+  	<!--热门推荐-->
+  	<div class="bg-fff box-shadow radius mb-20">
+			<div class="tab-category">
+				<a href=""><strong>热门推荐</strong></a>
+			</div>
+			<div class="tab-category-item">
+				<ul class="index_recd">
+					{% for i in hot_check %}
+					<li>
+						<a href="detail?id={{i.id }}">{{ i.title }}</a>
+						<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> {{ i.click_num }} </p>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	
+<!--标签-->
+		<div class="bg-fff box-shadow radius mb-20">
+			<div class="tab-category">
+				<a href=""><strong>标签云</strong></a>
+			</div>
+			<div class="tab-category-item">
+				<div class="tags">
+					{% for i in Target %}
+					<a href="{{i.path_name}}">{{i.name}}</a>
+					{% endfor %}
+				</div>
+		</div>
+  </div>
+  
+</section>
+<footer class="footer mt-20">
+    <div class="container-fluid" id="foot">
+        <p>Copyright &copy; 2016-2017 www.wfyvv.com <br>
+            <a href="#" target="_blank">皖ICP备17002922号</a>  更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a><br>
+        </p>
+    </div>
+</footer>
+	{% block page_js %}
+<script type="text/javascript" src="../../static/plugin/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../static/plugin/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../../static/plugin/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="../../static/plugin/pifu/pifu.js"></script>
+<script type="text/javascript" src="../../static/js/common.js"></script>
+<script> $(function(){ $(window).on("scroll",backToTopFun); backToTopFun(); }); </script>
+<script>
+
+$(function(){
+//标签
+	$(".tags a").each(function(){
+		var x = 9;
+		var y = 0;
+		var rand = parseInt(Math.random() * (x - y + 1) + y);
+		$(this).addClass("tags"+rand)
+	});
+	
+	$("img.lazyload").lazyload({failurelimit : 3});
+});
+
+</script>
+	{% endblock %}
+
+{% endblock %}
+

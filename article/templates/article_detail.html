@@ -1,0 +1,100 @@
+{% extends 'Base.html' %}
+
+
+{% block page_css %}
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="../../static/plugin/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/plugin/Hui-iconfont/1.0.8/iconfont.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/plugin/pifu/pifu.css" />
+<link rel="stylesheet" type="text/css" href="../../static/plugin/wangEditor/css/wangEditor.min.css">
+{% endblock %}
+{% block Top_js %}
+<![endif]-->
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } function showSide(){$('.navbar-nav').toggle();}</script>
+{% endblock %}
+
+{% block content %}
+<!--导航条-->
+
+<nav class="breadcrumb">
+  <div class="container"> <i class="Hui-iconfont">&#xe67f;</i> <a href="{% url 'HomePage:index' %}" class="c-primary">首页</a>
+	  <span class="c-gray en">&gt;</span>
+	  <a href="{% url 'article:page' %}"> <span class="c-gray">文章</span> </a>
+	  <span class="c-gray en">&gt;</span>
+	  <span class="c-gray">   {{ Info.title }} </span>
+  </div>
+</nav>
+
+<section class="container pt-20">
+	
+	<div class="row w_main_row">
+				
+				
+				<div class="col-lg-9 col-md-9 w_main_left">
+					<div class="panel panel-default  mb-20">
+						<div class="panel-body pt-10 pb-10">
+							<h2 class="c_titile">{{ Info.title }}</h2>
+							<p class="box_c"><span class="d_time">发布时间：{{ Info.add_time }}</span><span>编辑：<a href="mailto:1009936179@qq.com">远默</a></span><span>阅读（{{ Info.click_num }}）</span></p>
+									{{ Info.content | safe }}
+							<div class="keybq">
+						    	<p><span>关键字</span>：
+									<a class="label label-default" href="{% url 'article:page' %}?big_type={{ Info.category.name }}">{{ Info.category.name }}</a>
+									<a class="label label-default">{{Info.taginfo.name}}</a>
+								</p>
+						    </div>
+
+							<div class="nextinfo">
+								<p class="last">上一篇：<a href="?id={{Up_Info.id }}">{{Up_Info.title}}</a></p>
+								<p class="next">下一篇：<a href="?id={{Next_Info.id }}">{{Next_Info.title}}</a></p>
+						    </div>
+							
+						</div>
+					</div>
+					
+					<div class="panel panel-default  mb-20">
+						<div class="tab-category">
+
+						</div>
+
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3">
+					<!--热门推荐-->
+  	<div class="bg-fff box-shadow radius mb-20">
+			<div class="tab-category">
+				<a href=""><strong>热门推荐</strong></a>
+			</div>
+			<div class="tab-category-item">
+				<ul class="index_recd">
+					{% for i in hot_check %}
+					<li>
+						<a href="?id={{i.id }}">{{i.title}}</a>
+						<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe622;</i> {{ i.click_num }} </p>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+
+
+				</div>
+			</div>
+	
+</section>
+<footer class="footer mt-20">
+		<p>Copyright &copy;2017 wfyvv.com All Rights Reserved. <br>
+			<a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">皖ICP备17002922号</a>  更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a><br>
+		</p>
+</footer>
+{% block page_js %}
+<script type="text/javascript" src="../../static/plugin/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../static/plugin/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../../static/plugin/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="../../static/plugin/pifu/pifu.js"></script>
+<script type="text/javascript" src="../../static/js/common.js"></script>
+<script> $(function(){ $(window).on("scroll",backToTopFun); backToTopFun(); }); </script>
+
+	{% endblock %}
+
+{% endblock %}
